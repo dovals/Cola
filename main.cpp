@@ -12,13 +12,8 @@ public:
     Alumno(){};
 
 
-    bool operator==(const Alumno& otro) const { return Nombre == otro.Nombre && Nombre_Carrera == otro.Nombre_Carrera; }
-    bool operator!=(const Alumno& otro) const { return !(*this == otro); }
-    bool operator<(const Alumno& otro) const { return Nombre < otro.Nombre && Nombre_Carrera < otro.Nombre_Carrera; }
-    bool operator>(const Alumno& otro) const { return otro < *this; }
-
     friend std::ostream & operator<<(std::ostream &O, Alumno &x){
-            O<<"\n Nombre: "<<x.Nombre<<"  Nombre Carrera: " <<x.Nombre_Carrera<<" Numero de Materias Aprobadas: "<<x.Materias_Aprob<<" Promedio: "<<x.Promedio<<std::endl;
+            O<<"\n Nombre: "<<x.Nombre<<" Nombre Carrera: " <<x.Nombre_Carrera<<" Numero de Materias Aprobadas: "<<x.Materias_Aprob<<" Promedio: "<<x.Promedio<<std::endl;
             return O;
     }
     friend std::istream & operator>>(std::istream &O, Alumno &x){
@@ -34,6 +29,7 @@ public:
     }
 };
 
+//plantillas
 template<class T>
 class Cola{
 private:
@@ -168,20 +164,32 @@ int main()
 {
     Cola<Alumno> MiCola;
     Alumno x;
+    int op;
+    while(true)
+    {
+        std::cout<<" 1.-Agregar informacion de alumno \n 2.-generar constancia"<<std::endl;
+        std::cin>>op;
+        switch(op)
+        {
+            case 1:
+                std::cout<<"\n Ingresa los datos del alumno No.- "<<std::endl;
+                std::cin>>x;
+                MiCola.Queue(x);
+            break;
 
-
-    for(int i=1;i<=total;i++){
-        std::cout<<"\n Ingresa los datos del alumno No.- "<<i<<std::endl;
-        std::cin>>x;
-        MiCola.Queue(x);
+            case 2:
+                if(MiCola.vacia())
+                {
+                    std::cout<<"\n no hay solicitudes pendientes"<<std::endl;
+                }
+                else
+                {
+                    x=MiCola.Front();
+                    std::cout<<x<<std::endl;
+                    MiCola.Dequeue();
+                }
+            break;
+        }
     }
-
-    std::cout<<"\n\n\n Constancias"<<std::endl;
-    for(int i=1;i<=total;i++){
-        x=MiCola.Front();
-        std::cout<<x<<std::endl;
-        MiCola.Dequeue();
-    }
-
     return 0;
 }
